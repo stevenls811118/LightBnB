@@ -1,6 +1,3 @@
-const properties = require('./json/properties.json');
-// const users = require('./json/users.json');
-
 const { Pool } = require('pg');
 
 const pool = new Pool({
@@ -24,8 +21,11 @@ const getUserWithEmail = function(email) {
       FROM users 
       WHERE email = $1;`, [queryEmail])
     .then((result) => {
-      console.log(result.rows[0]);
-      return result.rows[0];
+      if (result.rows) {
+        return result.rows[0];
+      } else {
+        return null;
+      }
     })
     .catch(err => {
       console.log(err.message);
@@ -45,8 +45,11 @@ const getUserWithId = function(id) {
       FROM users 
       WHERE id = $1;`, [id])
     .then((result) => {
-      console.log(result.rows[0]);
-      return result.rows[0];
+      if (result.rows) {
+        return result.rows[0];
+      } else {
+        return null;
+      }
     })
     .catch(err => {
       console.log(err.message);
@@ -72,7 +75,6 @@ const addUser =  function(user) {
       VALUES ($1, $2, $3)
       RETURNING *;`, [name, email, password])
     .then((result) => {
-      console.log(result.rows[0]);
       return result.rows[0];
     })
     .catch(err => {
@@ -117,15 +119,16 @@ exports.getAllReservations = getAllReservations;
  */
 const getAllProperties = (options, limit = 10) => {
   
+  // Setup an array to hold any parameters that may be available for the query.
   const queryParams = [];
-  // 2
+  // Start the query with all information that comes before the WHERE clause.
   let queryString = `
   SELECT properties.*, avg(property_reviews.rating) as average_rating
   FROM properties
   JOIN property_reviews ON properties.id = property_id
   `;
 
-  // 3
+  // Check if a city has been passed in as an option. Add the city to the params array and create a WHERE clause for the city We can use the length of the array to dynamically get the $n placeholder number. Since this is the first parameter, it will be $1. The % syntax for the LIKE clause must be part of the parameter, not the query.
   if (options.city) {
     queryParams.push(`%${options.city.slice(1)}%`);
     queryString += `WHERE city LIKE $${queryParams.length} `;
@@ -156,26 +159,25 @@ const getAllProperties = (options, limit = 10) => {
     }
   }
 
+  // Add GROUP BY clause after the WHERE clause.
   queryString += `
   GROUP BY properties.id
   `;
 
+  // Add HAVING clause for minimum_rating.
   if (options.minimum_rating) {
     queryParams.push(`${options.minimum_rating}`);
     queryString += `HAVING avg(property_reviews.rating) >= $${queryParams.length} `;
   }
 
-  // 4
+  // Add rest query that comes after the HAVING clause.
   queryParams.push(limit);
   queryString += `
   ORDER BY cost_per_night
   LIMIT $${queryParams.length};
   `;
 
-  // 5
-  console.log(queryString, queryParams);
-
-  // 6
+  // Run the query
   return pool.query(queryString, queryParams)
     .then((res) => {
       return res.rows;
@@ -191,10 +193,7 @@ exports.getAllProperties = getAllProperties;
  * @return {Promise<{}>} A promise to the property.
  */
 const addProperty = function(property) {
-  // const propertyId = Object.keys(properties).length + 1;
-  // property.id = propertyId;
-  // properties[propertyId] = property;
-  // return Promise.resolve(property);
+
   return pool
     .query(`
       INSERT INTO properties (
@@ -203,7 +202,6 @@ const addProperty = function(property) {
       $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
       RETURNING *;`, [property.title, property.description, property.owner_id, property.cover_photo_url, property.thumbnail_photo_url, property.cost_per_night * 100, property.parking_spaces, property.number_of_bathrooms, property.number_of_bedrooms, property.province, property.city, property.country, property.street, property.post_code])
     .then((result) => {
-      console.log(result.rows[0]);
       return result.rows[0];
     })
     .catch(err => {

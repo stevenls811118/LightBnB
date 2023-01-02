@@ -1,12 +1,13 @@
+require('dotenv').config();
+
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: 'labber',
-  password: '123',
-  host: 'localhost',
-  database: 'lightbnb'
+  user: process.env.PGUSERNAME,
+  password: process.env.PGPASS,
+  host: process.env.PGHOST,
+  database: process.env.PGDB
 });
-
 
 /**
  * Get a single user from the database given their email.

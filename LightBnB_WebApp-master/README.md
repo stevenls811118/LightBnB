@@ -49,12 +49,12 @@ A simple multi-page Airbnb clone that uses a server-side Javascript to display t
 
 ## Final Product
 
-!["Screenshot of ERD"](https://github.com/stevenls811118/tweeter/blob/master/docs/Desktop%20size.PNG?raw=true)
-!["Screenshot of homepage"](https://github.com/stevenls811118/tweeter/blob/master/docs/Tablet%20size.PNG?raw=true)
-!["Screenshot of my reservations"](https://github.com/stevenls811118/tweeter/blob/master/docs/Sliding%20down%20form.PNG?raw=true)
-!["Screenshot of my listings"](https://github.com/stevenls811118/tweeter/blob/master/docs/Form%20validation.PNG?raw=true)
-!["Screenshot of search with options"](https://github.com/stevenls811118/tweeter/blob/master/docs/Sliding%20down%20form.PNG?raw=true)
-!["Screenshot of create listing"](https://github.com/stevenls811118/tweeter/blob/master/docs/Form%20validation.PNG?raw=true)
+!["Screenshot of ERD"](https://github.com/stevenls811118/LightBnB/blob/master/LightBnB_WebApp-master/docs/ERD.PNG?raw=true)
+!["Screenshot of homepage"](https://github.com/stevenls811118/LightBnB/blob/master/LightBnB_WebApp-master/docs/Homepage.PNG?raw=true)
+!["Screenshot of my reservations"](https://github.com/stevenls811118/LightBnB/blob/master/LightBnB_WebApp-master/docs/My%20reservations.PNG?raw=true)
+!["Screenshot of my listings"](https://github.com/stevenls811118/LightBnB/blob/master/LightBnB_WebApp-master/docs/My%20listings.PNG?raw=true)
+!["Screenshot of search with options"](https://github.com/stevenls811118/LightBnB/blob/master/LightBnB_WebApp-master/docs/Search%20with%20options.PNG?raw=true)
+!["Screenshot of create listing"](https://github.com/stevenls811118/LightBnB/blob/master/LightBnB_WebApp-master/docs/Create%20listing.PNG?raw=true)
 
 ## Getting Started
 

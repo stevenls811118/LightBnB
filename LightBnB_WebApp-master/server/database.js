@@ -143,6 +143,7 @@ const getAllProperties = (options, limit = 10) => {
   if (options.minimum_price_per_night) {
     let minimumPrice = Number(options.minimum_price_per_night) * 100;
     queryParams.push(`${minimumPrice}`);
+    // Decide is there other queryParams from options
     if (queryParams.length === 1) {
       queryString += `WHERE cost_per_night >= $${queryParams.length} `;
     } else if (queryParams.length === 2) {
@@ -153,6 +154,7 @@ const getAllProperties = (options, limit = 10) => {
   if (options.maximum_price_per_night) {
     let maximumPrice = Number(options.maximum_price_per_night) * 100;
     queryParams.push(`${maximumPrice}`);
+    // Decide is there other queryParams from options
     if (queryParams.length === 1) {
       queryString += `WHERE cost_per_night <= $${queryParams.length} `;
     } else {
@@ -165,7 +167,7 @@ const getAllProperties = (options, limit = 10) => {
   GROUP BY properties.id
   `;
 
-  // Add HAVING clause for minimum_rating.
+  // Add HAVING clause if there is options.minimum_rating.
   if (options.minimum_rating) {
     queryParams.push(`${options.minimum_rating}`);
     queryString += `HAVING avg(property_reviews.rating) >= $${queryParams.length} `;
